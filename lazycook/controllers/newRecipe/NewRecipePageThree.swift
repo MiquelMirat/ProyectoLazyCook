@@ -30,7 +30,7 @@ class NewRecipePageThree: UIViewController {
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         //tap.cancelsTouchesInView = false
         
-        view.addGestureRecognizer(tap)
+        //view.addGestureRecognizer(tap)
 
     }
     
@@ -209,10 +209,13 @@ extension NewRecipePageThree: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("did select row at?")
         switch FilterOption(rawValue: indexPath.row) {
         case FilterOption.ingredients?:
+            print("did select row at? ingrediets")
             performSegue(withIdentifier: "page3toIngredients", sender: self)
         case FilterOption.alergens?:
+            print("did select row at? alergens")
             performSegue(withIdentifier: "page3toAlergens", sender: self)
         case FilterOption.isVegan?:
             

@@ -16,9 +16,10 @@ class NewRecipeViewController: UIViewController {
     var db = Firestore.firestore()
     var data:Data?
     var recipe:Recipe?
-    var hasPickedImage:Bool = true {
+    var hasPickedImage:Bool = false {
         didSet{
             deleteImageBtn.isEnabled = hasPickedImage
+            editingChanged()
         }
     }
     
@@ -172,7 +173,7 @@ extension NewRecipeViewController : UIImagePickerControllerDelegate, UINavigatio
             //uploadRecipe(name: name, data: data)
             recipeImage.image = image
             recipe?.mainImage = image
-            hasPickedImage = true
+            self.hasPickedImage = true
         }else{
             print("error")
         }

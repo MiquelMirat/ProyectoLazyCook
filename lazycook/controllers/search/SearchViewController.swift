@@ -134,6 +134,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
         return SearchParameters.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("did select roww  searchview controller")
         switch SearchParameters(rawValue: indexPath.row) {
         case SearchParameters.ingredients?:
             performSegue(withIdentifier: "searchToIngredients", sender: self)

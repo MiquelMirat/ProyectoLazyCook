@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Cosmos
+
 
 
 class RecipeDetailVC: UIViewController {
@@ -18,6 +20,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var recipeRating: UILabel!
     @IBOutlet weak var recipeDifficulty: UILabel!
     
+    @IBOutlet weak var cosmosView: CosmosView!
     
     var recipeId:String!
     var recipe:Recipe?
@@ -25,7 +28,7 @@ class RecipeDetailVC: UIViewController {
     let db = Firestore.firestore()
     let st = Storage.storage()
     let manager = Manager.shared
-    
+    let initialRating = 2.5
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +69,9 @@ class RecipeDetailVC: UIViewController {
         self.recipeTitle.text = recipe?.title
         self.recipeDescr.text = recipe?.description
         self.recipeDifficulty.text = recipe?.difficulty.description
+        self.cosmosView.settings.fillMode = .half
+        self.cosmosView.rating = self.initialRating
+        self.loadRatings()
     }
     func loadRatings(){
         db.collection("stars").whereField("recipeId", isEqualTo: recipe!.recipe_id).getDocuments { (snapshot, err) in
@@ -75,7 +81,10 @@ class RecipeDetailVC: UIViewController {
                 self.ratings!.append(doc.data()["rating"] as! Double)
             }
             print("ratings count", self.ratings!.count)
-            
+            if self.ratings!.count != 0 {
+            self.cosmosView.rating = self.ratings?.average ?? 2.5
+            self.recipeRating.text = "Current rating: \(self.cosmosView.rating)/5"
+            }
         }
     }
 

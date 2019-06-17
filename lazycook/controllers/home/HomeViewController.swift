@@ -162,7 +162,9 @@ extension HomeViewController :UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as? RecipeCell
         cell?.mainImage.image = recipes?[indexPath.row].mainImage
+        cell?.cosmosView.settings.fillMode = .half
         cell?.cosmosView.rating = recipes?[indexPath.row].ratings.count == 0 ? 2.5 : recipes![indexPath.row].ratings.average
+        cell?.cosmosView.settings.updateOnTouch = false
         cell?.titleLbl.text = recipes?[indexPath.row].title
         cell?.descrLbl.text = recipes?[indexPath.row].description
         cell?.difficultyLbl.text = "Difficulty Level: " + recipes![indexPath.row].difficulty.description
